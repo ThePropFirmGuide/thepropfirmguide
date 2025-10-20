@@ -1,6 +1,6 @@
 /* ThePropFirmGuide • FundingPips (Full Page, Final)
    - Full layout (hero, stats, tabs, highlights, review)
-   - Challenges table: renamed headers, stacked arrows at right (centered), white→cyan when sorted
+   - Challenges table: renamed headers, arrows inline next to text (centered), white→cyan when sorted
    - Profit split bar restored
    - BUY button (same visual language as CTA)
 */
@@ -249,19 +249,21 @@
 
   .challenges-table{ width:100%; border-collapse:collapse; text-align:center; font-size:13px; border-radius:12px; overflow:hidden }
   .challenges-table thead th{
-    background:#1a1a1a; border-bottom:3px solid var(--cyan); text-transform:uppercase; letter-spacing:.05em; padding:12px 26px 12px 10px;
-    position:sticky; top:0; z-index:2; font-weight:900; /* extra bold */
+    background:#1a1a1a; border-bottom:3px solid var(--cyan); text-transform:uppercase; letter-spacing:.05em; padding:12px 14px;
+    position:sticky; top:0; z-index:2; font-weight:900;
   }
-  .challenges-table td{ padding:12px 10px; border-bottom:1px solid #222; vertical-align:middle; font-weight:800 } /* thicker text */
+  .challenges-table td{ padding:12px 10px; border-bottom:1px solid #222; vertical-align:middle; font-weight:800 }
   .challenges-table tbody tr.dark{ background:#141414; color:#fff }
   .challenges-table tbody tr.light{ background:#1c1c1c; color:#fff }
   .challenges-table tbody tr:hover{ background:rgba(51,204,255,.15) }
 
-  /* Sort controls: always on the RIGHT, centered relative to header text height */
-  .sortable{ cursor:pointer; user-select:none; position:relative; padding-right:26px }
+  /* Sort controls: INLINE next to header text, vertically centered */
+  .sortable{ cursor:pointer; user-select:none; }
+  .sortable .hdr{
+    display:inline-flex; align-items:center; justify-content:center; gap:6px;
+  }
   .sortable .sort-icons{
-    position:absolute; right:6px; top:50%; transform:translateY(-50%);
-    display:flex; flex-direction:column; align-items:center; gap:2px;
+    display:inline-flex; flex-direction:column; align-items:center; line-height:1; transform:translateY(1px);
   }
   .sort-icons .up,.sort-icons .down{
     display:block; width:0; height:0; border-left:4px solid transparent; border-right:4px solid transparent;
@@ -413,30 +415,14 @@
           <table id="propTable" class="challenges-table glass">
             <thead>
               <tr>
-                <th class="sortable" data-col="0">Size
-                  <span class="sort-icons"><span class="up"></span><span class="down"></span></span>
-                </th>
-                <th class="sortable" data-col="1">Steps
-                  <span class="sort-icons"><span class="up"></span><span class="down"></span></span>
-                </th>
-                <th class="sortable" data-col="2">Profit Target
-                  <span class="sort-icons"><span class="up"></span><span class="down"></span></span>
-                </th>
-                <th class="sortable" data-col="3">Daily Loss
-                  <span class="sort-icons"><span class="up"></span><span class="down"></span></span>
-                </th>
-                <th class="sortable" data-col="4">Max Loss
-                  <span class="sort-icons"><span class="up"></span><span class="down"></span></span>
-                </th>
-                <th class="sortable" data-col="5">Profit Split
-                  <span class="sort-icons"><span class="up"></span><span class="down"></span></span>
-                </th>
-                <th class="sortable" data-col="6">Payout
-                  <span class="sort-icons"><span class="up"></span><span class="down"></span></span>
-                </th>
-                <th class="sortable" data-col="7">Price
-                  <span class="sort-icons"><span class="up"></span><span class="down"></span></span>
-                </th>
+                <th class="sortable" data-col="0"><span class="hdr">Size<span class="sort-icons"><span class="up"></span><span class="down"></span></span></span></th>
+                <th class="sortable" data-col="1"><span class="hdr">Steps<span class="sort-icons"><span class="up"></span><span class="down"></span></span></span></th>
+                <th class="sortable" data-col="2"><span class="hdr">Profit Target<span class="sort-icons"><span class="up"></span><span class="down"></span></span></span></th>
+                <th class="sortable" data-col="3"><span class="hdr">Daily Loss<span class="sort-icons"><span class="up"></span><span class="down"></span></span></span></th>
+                <th class="sortable" data-col="4"><span class="hdr">Max Loss<span class="sort-icons"><span class="up"></span><span class="down"></span></span></span></th>
+                <th class="sortable" data-col="5"><span class="hdr">Profit Split<span class="sort-icons"><span class="up"></span><span class="down"></span></span></span></th>
+                <th class="sortable" data-col="6"><span class="hdr">Payout<span class="sort-icons"><span class="up"></span><span class="down"></span></span></span></th>
+                <th class="sortable" data-col="7"><span class="hdr">Price<span class="sort-icons"><span class="up"></span><span class="down"></span></span></span></th>
                 <th>Buy</th>
               </tr>
             </thead>
