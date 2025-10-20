@@ -317,7 +317,7 @@
   .score-card .val{ font-size:.95rem; color:#9bdaf2 }
   .columns{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:12px }
   .list{ padding:16px 16px }
-  .list h3{ margin:0 0 8px; color:var(--cyan); font-size:1.05rem; text-transform:uppercase }
+  .list h3{ margin:0 0 8px; color:#cyan; font-size:1.05rem; text-transform:uppercase }
   .pros li{ color:#d4fff2 } .cons li{ color:#ffe1e8 }
 
   .reveal{ opacity:0; transform:translateY(24px); transition:opacity .8s ease, transform .8s ease }
@@ -431,7 +431,7 @@
                 <th class="sortable" data-col="5">Profit Split
                   <span class="sort-icons"><span class="up"></span><span class="down"></span></span>
                 </th>
-                <th class="sortable" data-col="6">Payout Frequency
+                <th class="sortable" data-col="6">Payout
                   <span class="sort-icons"><span class="up"></span><span class="down"></span></span>
                 </th>
                 <th class="sortable" data-col="7">Price
