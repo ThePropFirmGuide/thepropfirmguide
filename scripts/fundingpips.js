@@ -1,8 +1,12 @@
-/* ThePropFirmGuide • FundingPips (Full Page, Final)
+<div id="tpg-root"></div>
+<script>
+/* ThePropFirmGuide • FundingPips (Full Page, Updated)
    - Full layout (hero, stats, tabs, highlights, review)
-   - Challenges table: renamed headers, arrows inline next to text (centered), white→cyan when sorted
-   - Profit split bar restored
-   - BUY button (same visual language as CTA)
+   - Challenges table:
+     * headers renamed
+     * arrows inline next to text (centered), white→cyan when sorted
+     * "BUY" button embedded inside Price cell (no separate Website/Buy column)
+   - Profit split bar kept
 */
 
 (function(){
@@ -77,7 +81,7 @@
     challenges: [
       {
         size:"100K",
-        program:"1 Step", // will show as Steps per header rename
+        program:"1 Step", // will show under "Steps"
         target:"Varies by program",
         daily:"Varies",
         total:"Varies",
@@ -295,9 +299,9 @@
 
   /* BUY button using same language as .btn */
   .buy-btn{
-    display:inline-block; background:var(--cyan); color:#000!important; padding:10px 14px; border-radius:12px;
+    display:inline-block; background:var(--cyan); color:#000!important; padding:8px 12px; border-radius:10px;
     font-weight:900; text-transform:uppercase; letter-spacing:.05em; box-shadow:0 0 18px var(--cyan-20);
-    border:2px solid transparent; text-decoration:none; transition:.25s ease;
+    border:2px solid transparent; text-decoration:none; transition:.25s ease; margin-left:8px;
   }
   .buy-btn:hover{ background:#000; color:#fff!important; border-color:#fff; transform:translateY(-2px); box-shadow:0 0 28px rgba(51,204,255,.35) }
 
@@ -319,7 +323,7 @@
   .score-card .val{ font-size:.95rem; color:#9bdaf2 }
   .columns{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:12px }
   .list{ padding:16px 16px }
-  .list h3{ margin:0 0 8px; color:#cyan; font-size:1.05rem; text-transform:uppercase }
+  .list h3{ margin:0 0 8px; color:var(--cyan); font-size:1.05rem; text-transform:uppercase }
   .pros li{ color:#d4fff2 } .cons li{ color:#ffe1e8 }
 
   .reveal{ opacity:0; transform:translateY(24px); transition:opacity .8s ease, transform .8s ease }
@@ -423,7 +427,6 @@
                 <th class="sortable" data-col="5"><span class="hdr">Profit Split<span class="sort-icons"><span class="up"></span><span class="down"></span></span></span></th>
                 <th class="sortable" data-col="6"><span class="hdr">Payout<span class="sort-icons"><span class="up"></span><span class="down"></span></span></span></th>
                 <th class="sortable" data-col="7"><span class="hdr">Price<span class="sort-icons"><span class="up"></span><span class="down"></span></span></span></th>
-                <th>Buy</th>
               </tr>
             </thead>
             <tbody id="challengeBody"></tbody>
@@ -562,11 +565,12 @@
 
   // Review
   const R = DATA.review;
-  $("#verdict").textContent = R.verdict;
+  $("#verdict").textContent = R.verdict || "";
   const overall = (+R.overall||0).toFixed(1);
   const stars = $("#overallStars");
-  stars.style.setProperty("--rating", +overall);
-  $("#overallScore").textContent = `${overall} / 5`;
+  if(stars) stars.style.setProperty("--rating", +overall);
+  const overallScore = $("#overallScore");
+  if(overallScore) overallScore.textContent = `${overall} / 5`;
 
   const scoreWrap = $("#scoreCards");
   (R.metrics||[]).forEach(m=>{
@@ -587,14 +591,14 @@
   const listFill = (el,arr)=>{ (arr||[]).forEach(x=> el.insertAdjacentHTML("beforeend", `<li>${x}</li>`)); };
   listFill($("#prosList"), R.pros);
   listFill($("#consList"), R.cons);
-  $("#summary").textContent = R.summary;
+  $("#summary").textContent = R.summary || "";
 
   // =========================
   // CHALLENGES TABLE (Render + Interactions)
   // =========================
   const bodyEl = $("#challengeBody");
 
-  // default split inference (just in case)
+  // default split inference (fallback)
   const programDefaultSplit = (prog) => {
     const p = String(prog||"").toLowerCase();
     if (p.includes("2 step pro")) return 90;
@@ -603,7 +607,7 @@
     return 80;
   };
 
-  // Row template (with profit split bar + payout pill + BUY button)
+  // Row template (split bar + payout pill + PRICE + BUY button in same cell)
   const rowHtml = r => {
     const split = Number.isFinite(+r.profitSplitPercent) ? +r.profitSplitPercent : programDefaultSplit(r.program);
     const clamped = Math.max(0, Math.min(100, split));
@@ -622,8 +626,7 @@
           </div>
         </td>
         <td><span class="payout-pill">🗓️ ${payout}</span></td>
-        <td>${r.fee}</td>
-        <td><a href="${r.url}" target="_blank" rel="noopener" class="buy-btn">BUY</a></td>
+        <td><span class="price">${r.fee}</span><a href="${r.url}" target="_blank" rel="noopener" class="buy-btn">BUY</a></td>
       </tr>`;
   };
 
@@ -650,9 +653,9 @@
 
   const qBox = $("#searchBox");
   function applyFilters(){
-    const q = (qBox.value||"").toLowerCase();
-    const s = (sizeSel.value||"").toUpperCase();
-    const p = (progSel.value||"").toUpperCase();
+    const q = (qBox?.value||"").toLowerCase();
+    const s = (sizeSel?.value||"").toUpperCase();
+    const p = (progSel?.value||"").toUpperCase();
     const filtered = DATA.challenges.filter(r=>{
       const text = `${r.size} ${r.program} ${r.target} ${r.daily} ${r.total} ${r.fee} ${r.payoutFreq||""} ${r.profitSplitPercent||programDefaultSplit(r.program)}%`.toLowerCase();
       const sizeMatch = !s || String(r.size).toUpperCase().startsWith(s);
@@ -661,9 +664,9 @@
     });
     paintRows(filtered);
   }
-  qBox.addEventListener("input", applyFilters);
-  sizeSel.addEventListener("change", applyFilters);
-  progSel.addEventListener("change", applyFilters);
+  if(qBox) qBox.addEventListener("input", applyFilters);
+  if(sizeSel) sizeSel.addEventListener("change", applyFilters);
+  if(progSel) progSel.addEventListener("change", applyFilters);
 
   // Sorting
   const table = $("#propTable");
@@ -690,7 +693,7 @@
           row.total,            // 4
           split,                // 5 numeric
           row.payoutFreq||"",   // 6
-          row.fee               // 7 (price, numeric-ish)
+          row.fee               // 7 (price)
         ];
         return { row, keyMap };
       });
@@ -714,7 +717,7 @@
     });
   });
 
-  // Reveal on scroll (for hero/cards/review niceness)
+  // Reveal on scroll (for hero/cards/review)
   (function(){
     const els=[...root.querySelectorAll(".reveal")];
     if(!("IntersectionObserver" in window)){ els.forEach(e=>e.classList.add("on")); return; }
@@ -726,3 +729,4 @@
     els.forEach(el=>io.observe(el));
   })();
 })();
+</script>
