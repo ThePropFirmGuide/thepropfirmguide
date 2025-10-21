@@ -272,10 +272,44 @@
   .sort-icons .up,.sort-icons .down{
     display:block; width:0; height:0; border-left:4px solid transparent; border-right:4px solid transparent;
   }
-  .sort-icons .up{ border-bottom:6px solid #fff }   /* white by default */
-  .sort-icons .down{ border-top:6px solid #fff }    /* white by default */
-  th.sorted-asc .sort-icons .up{ border-bottom-color:var(--cyan) }     /* cyan when sorted */
-  th.sorted-desc .sort-icons .down{ border-top-color:var(--cyan) }     /* cyan when sorted */
+/* Sort controls: INLINE next to header text, perfectly centered */
+.sortable .hdr {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.sort-icons {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;   /* keeps arrows centered vertically */
+  line-height: 1;
+  transform: translateY(1px);
+}
+
+.sort-icons .up,
+.sort-icons .down {
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+}
+
+.sort-icons .up {
+  border-bottom: 6px solid #fff;   /* white by default */
+  margin-bottom: 3px;              /* adds slight gap between arrows */
+}
+
+.sort-icons .down {
+  border-top: 6px solid #fff;      /* white by default */
+}
+
+th.sorted-asc .sort-icons .up { border-bottom-color: var(--cyan); }   /* cyan when sorted */
+th.sorted-desc .sort-icons .down { border-top-color: var(--cyan); }   /* cyan when sorted */
+
 
   /* Profit split bar */
   .splitbar{
