@@ -311,19 +311,42 @@ th.sorted-asc .sort-icons .up { border-bottom-color: var(--cyan); }   /* cyan wh
 th.sorted-desc .sort-icons .down { border-top-color: var(--cyan); }   /* cyan when sorted */
 
 
-  /* Profit split bar */
-  .splitbar{
-    display:grid; grid-template-columns:1fr auto; align-items:center; gap:10px; min-width:160px;
-  }
-  .splitbar .track{
-    position:relative; width:100%; height:10px; background:#0f172a; border:1px solid var(--border);
-    border-radius:999px; overflow:hidden; box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
-  }
-  .splitbar .fill{
-    height:100%; width:0%; background:linear-gradient(90deg, rgba(51,204,255,0.85), rgba(49,208,170,0.85));
-    box-shadow:0 0 10px rgba(51,204,255,.35); transition:width .35s ease;
-  }
-  .splitbar .label{ font-weight:900; color:#e9f7ff; min-width:54px; text-align:right }
+ /* Profit split bar */
+.splitbar {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 6px; /* reduced from 10px → brings % closer to bar */
+  min-width: 160px;
+}
+
+.splitbar .track {
+  position: relative;
+  width: 100%;
+  height: 10px;
+  background: #0f172a;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.splitbar .fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, rgba(51, 204, 255, 0.85), rgba(49, 208, 170, 0.85));
+  box-shadow: 0 0 10px rgba(51, 204, 255, 0.35);
+  transition: width 0.35s ease;
+}
+
+.splitbar .label {
+  font-weight: 900;
+  color: #e9f7ff;
+  min-width: 54px;
+  text-align: right;
+  transform: translateY(-1px); /* subtle alignment fix */
+}
+
 
   /* Payout pill */
   .payout-pill{
@@ -584,7 +607,7 @@ th.sorted-desc .sort-icons .down { border-top-color: var(--cyan); }   /* cyan wh
 
   // Highlights
   const cards = [
-    { h:"💰 High Profit Split",  p: DATA.firm.profitSplit },
+    { h:"💰 High Profit Split",  p: DATA.firmSplit },
     { h:"⏳ No Time Pressure",  p: `${DATA.firm.timeLimit} to pass evaluations.` },
     { h:"🖥️ Platforms",        p: (DATA.firm.platforms||[]).join(" • ") },
     { h:"⚡ Payouts",          p: DATA.firm.payoutCycle }
